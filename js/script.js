@@ -19,7 +19,7 @@ musicImg.src = `images/${allMusic[1].src}.jpg`;
 musicArtist.innerText = "Unknwon";
 
 window.addEventListener("load", () => {
-  loadMusic(musicIndex);
+  // loadMusic(musicIndex);
   playingSong();
 });
 
