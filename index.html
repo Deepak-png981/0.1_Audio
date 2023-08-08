@@ -14,7 +14,12 @@
     <div class="top-bar">
       <i class="material-icons">expand_more</i>
       <span>Now Playing</span>
-      <i class="material-icons">more_horiz</i>
+      <!-- <i class="material-icons">more_horiz</i> -->
+      <!-- testing of background changing colour -->
+      <div id="toggle">
+        <div id="circle" class="animate"></div>
+      </div>
+      <!-- testing end -->
     </div>
     <div class="img-area">
       <img src="" alt="">
@@ -61,6 +66,29 @@
     </div>
   </div>
 
+
+  <!-- testing for the equilizer card -->
+  <div class="card" id="equalizer">
+    <div class="card-body">
+      <h5 class="card-title">Equalizer</h5>
+      <div class="slidecontainer">
+        <label>
+          Bass:
+          <input type="range" min="-50" max="50" value="0" class="slider" id="bass">
+        </label>
+        <label>
+          Mid:
+          <input type="range" min="-50" max="50" value="0" class="slider" id="mid">
+        </label>
+        <label>
+          Treble:
+          <input type="range" min="-50" max="50" value="0" class="slider" id="treble">
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- testing for the equilizer end here -->
   <script src="js/music-list.js"></script>
   <script src="js/script.js"></script>
 

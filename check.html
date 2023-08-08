@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Equalizer</title>
+</head>
+
+<body>
+    <input id="upload" type="file" accept="audio/*">
+    <div>
+        <label>
+            Bass:
+            <input id="bass" type="range" min="-50" max="50" value="0">
+        </label>
+        <label>
+            Mid:
+            <input id="mid" type="range" min="-50" max="50" value="0">
+        </label>
+        <label>
+            Treble:
+            <input id="treble" type="range" min="-50" max="50" value="0">
+        </label>
+    </div>
+    <button id="play">Play</button>
+    <button id="pause">Pause</button>
+    <script>
+        let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let source;
+        let bassFilter = audioCtx.createBiquadFilter();
+        let midFilter = audioCtx.createBiquadFilter();
+        let trebleFilter = audioCtx.createBiquadFilter();
+
+        bassFilter.type = "lowshelf";
+        bassFilter.frequency.value = 500;
+        midFilter.type = "peaking";
+        midFilter.frequency.value = 1500;
+        midFilter.Q.value = Math.SQRT1_2;
+        trebleFilter.type = "highshelf";
+        trebleFilter.frequency.value = 5000;
+
+        document.getElementById('upload').addEventListener('change', function () {
+            let reader = new FileReader();
+            reader.onload = function (ev) {
+                audioCtx.decodeAudioData(ev.target.result, function (buffer) {
+                    if (source) {
+                        source.stop();
+                    }
+                    source = audioCtx.createBufferSource();
+                    source.buffer = buffer;
+                    source.connect(bassFilter);
+                    bassFilter.connect(midFilter);
+                    midFilter.connect(trebleFilter);
+                    trebleFilter.connect(audioCtx.destination);
+                });
+            };
+            reader.readAsArrayBuffer(this.files[0]);
+        });
+
+        document.getElementById('bass').addEventListener('input', function () {
+            bassFilter.gain.value = this.value;
+        });
+
+        document.getElementById('mid').addEventListener('input', function () {
+            midFilter.gain.value = this.value;
+        });
+
+        document.getElementById('treble').addEventListener('input', function () {
+            trebleFilter.gain.value = this.value;
+        });
+
+        document.getElementById('play').addEventListener('click', function () {
+            source.start();
+        });
+
+        document.getElementById('pause').addEventListener('click', function () {
+            source.stop();
+        });
+    </script>
+</body>
+
+</html>

@@ -9,7 +9,7 @@ const wrapper = document.querySelector(".wrapper"),
   progressArea = wrapper.querySelector(".progress-area"),
   progressBar = progressArea.querySelector(".progress-bar"),
   musicList = wrapper.querySelector(".music-list"),
-  moreMusicBtn = wrapper.querySelector("#more-music"),
+  // moreMusicBtn = wrapper.querySelector("#more-music"),
   closemoreMusic = musicList.querySelector("#close");
 
 let musicIndex = Math.floor((Math.random() * allMusic.length) + 1);
@@ -17,12 +17,83 @@ isMusicPaused = true;
 //Music ki image yaha show ker rhe hai
 musicImg.src = `images/${allMusic[1].src}.jpg`;
 musicArtist.innerText = "Unknwon";
+//checking eq
+let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+let sourceNode, bassNode, midNode, trebleNode;
+let audio = document.getElementById('main-audio');
+
+sourceNode = audioContext.createMediaElementSource(audio);
+
+bassNode = audioContext.createBiquadFilter();
+bassNode.type = "lowshelf";
+bassNode.frequency.value = 500;
+
+midNode = audioContext.createBiquadFilter();
+midNode.type = "peaking";
+midNode.Q.value = Math.SQRT1_2;
+midNode.frequency.value = 1000;
+
+trebleNode = audioContext.createBiquadFilter();
+trebleNode.type = "highshelf";
+trebleNode.frequency.value = 1500;
+
+sourceNode.connect(bassNode);
+bassNode.connect(midNode);
+midNode.connect(trebleNode);
+trebleNode.connect(audioContext.destination);
+
+// Event listeners for sliders
+document.getElementById('bass').addEventListener('input', (event) => {
+  bassNode.gain.value = event.target.value;
+});
+
+document.getElementById('mid').addEventListener('input', (event) => {
+  midNode.gain.value = event.target.value;
+});
+
+document.getElementById('treble').addEventListener('input', (event) => {
+  trebleNode.gain.value = event.target.value;
+});
+//chekcing
+let eqValues = { bass: 0, mid: 0, treble: 0 };
+let filters;
+let source;
+let context = new AudioContext();
+// let source = context.createMediaElementSource(document.querySelector('#audio-element'));
+let bassEq = context.createBiquadFilter();
+let midEq = context.createBiquadFilter();
+let trebleEq = context.createBiquadFilter();
+window.addEventListener("DOMContentLoaded", function () {
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  filters = createFilters(audioCtx);
+});
+
 
 window.addEventListener("load", () => {
   // loadMusic(musicIndex);
   playingSong();
 });
 
+function createFilters(context) {
+  let lowshelf = context.createBiquadFilter();
+  lowshelf.type = "lowshelf";
+  lowshelf.frequency.value = 500;
+
+  let peaking = context.createBiquadFilter();
+  peaking.type = "peaking";
+  peaking.frequency.value = 1000;
+  peaking.Q.value = Math.SQRT1_2;
+  peaking.gain.value = 0;
+
+  let highshelf = context.createBiquadFilter();
+  highshelf.type = "highshelf";
+  highshelf.frequency.value = 3000;
+
+  lowshelf.connect(peaking);
+  peaking.connect(highshelf);
+
+  return [lowshelf, peaking, highshelf];
+}
 // function loadMusic(indexNumb) {
 //   // musicName.innerText = "allMusic[indexNumb - 1].name";
 //   musicArtist.innerText = allMusic[indexNumb - 1].artist;
@@ -39,22 +110,122 @@ const fileUploader = document.querySelector("#fileUploader");
 
 //   fileUploader.click();
 // });
+// testing for background color change -DEEPAK
+var switchLight = false;
+// var htag = document.getElementsByTagName("h1")[0];
+var bodyTag = document.getElementsByTagName("body")[0];
+var circle = document.getElementById("circle");
+var toogle = document.getElementById("toggle");
+const root_theme = document.querySelector(':root');
+document.getElementById("toggle").onclick = function () {
+  if (!switchLight) {
+    // htag.style.color = "white";
+    root_theme.style.setProperty('--pink', '#39d50ea4');
+    root_theme.style.setProperty('--violet', '#d5b73f');
+    bodyTag.style.backgroundColor = "black";
+    circle.style.marginLeft = "100px";
+    switchLight = true;
+  }
+  else {
+    // htag.style.color = "black";
+    root_theme.style.setProperty('--violet', '#d5b73f');
+    root_theme.style.setProperty('--pink', 'black');
+    bodyTag.style.backgroundColor = "white";
+    circle.style.marginLeft = "0px";
+    switchLight = false;
+  }
+}
 
+//Testing end for background color change -DEEPAK
+
+// testing for the equilizer code
+function changeEQ(type, value) {
+  eqValues[type] = parseInt(value);
+  filters = updateFilters(eqValues, audioCtx, source);
+}
+
+function updateFilters(eqValues, context, source) {
+  if (source) {
+    source.disconnect();
+  }
+
+  const frequencies = [60, 170, 350, 1000, 3500, 10000];
+  let filters = frequencies.map((freq, i) => {
+    let eq = context.createBiquadFilter();
+    eq.frequency.value = freq;
+    eq.type = 'peaking';
+    eq.gain.value = i === 0 ? eqValues.bass : (i === 2 ? eqValues.treble : eqValues.mid);
+    return eq;
+  });
+
+  filters.reduce((prev, curr) => {
+    prev.connect(curr);
+    return curr;
+  });
+
+  source.connect(filters[0]);
+  filters[filters.length - 1].connect(context.destination);
+  return filters;
+}
+// Your function for connecting audio context and playing music would go here...
+
+
+// testing for the equilizer code end here
 fileUploader.addEventListener("change", function (e) {
   e.stopPropagation();
   let file = e.target.files[0];
+  // if (audioCtx) {
+  //   audioCtx.close();
+  // }
+  // audioCtx = new AudioContext();
+  // source = audioCtx.createBufferSource();
+  // filters = createFilters(audioCtx);
+
   let reader = new FileReader();
   reader.onloadend = function (e) {
+    // audioCtx.decodeAudioData(result, function (buffer) {
+    //   source.buffer = buffer;
+    //   source.connect(filters[0]);
+    //   filters[2].connect(audioCtx.destination);
+    //   source.start(0);
+    // });
     let result = e.target.result;
     mainAudio.src = result;
     playMusic();
   }
   reader.readAsDataURL(file);
+  // reader.readAsArrayBuffer(file);
 });
+function createFilters(context) {
+  const frequencies = [60, 170, 350, 1000, 3500, 10000];
+  let filters = frequencies.map((freq, i) => {
+    let eq = context.createBiquadFilter();
+    eq.frequency.value = freq;
+    eq.type = 'peaking';
+    eq.gain.value = i === 0 ? eqValues.bass : (i === 2 ? eqValues.treble : eqValues.mid);
+    return eq;
+  });
+
+  filters.reduce((prev, curr) => {
+    prev.connect(curr);
+    return curr;
+  });
+
+  return filters;
+}
 // TESTING END
 
 //play music function
 function playMusic() {
+  // // changes
+  // if (source) {
+  //   source.stop();
+  // }
+  // source = audioCtx.createMediaElementSource(mainAudio);
+  // source.connect(filters[0]);
+  // filters[2].connect(audioCtx.destination);
+  // // mainAudio.play();
+  // // changes end
   wrapper.classList.add("paused");
   playPauseBtn.querySelector("i").innerText = "pause";
   mainAudio.play();
@@ -62,6 +233,8 @@ function playMusic() {
 
 //pause music function
 function pauseMusic() {
+  source.disconnect();
+  // mainAudio.pause();
   wrapper.classList.remove("paused");
   playPauseBtn.querySelector("i").innerText = "play_arrow";
   mainAudio.pause();
@@ -192,9 +365,9 @@ mainAudio.addEventListener("ended", () => {
 });
 
 //show music list onclick of music icon
-moreMusicBtn.addEventListener("click", () => {
-  musicList.classList.toggle("show");
-});
+// moreMusicBtn.addEventListener("click", () => {
+//   musicList.classList.toggle("show");
+// });
 closemoreMusic.addEventListener("click", () => {
   moreMusicBtn.click();
 });
