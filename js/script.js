@@ -226,9 +226,11 @@ function playMusic() {
   // filters[2].connect(audioCtx.destination);
   // // mainAudio.play();
   // // changes end
-  wrapper.classList.add("paused");
-  playPauseBtn.querySelector("i").innerText = "pause";
-  mainAudio.play();
+  audioContext.resume().then(() => {
+    wrapper.classList.add("paused");
+    playPauseBtn.querySelector("i").innerText = "pause";
+    mainAudio.play();
+  })
 }
 
 //pause music function
