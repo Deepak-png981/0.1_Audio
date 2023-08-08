@@ -226,11 +226,9 @@ function playMusic() {
   // filters[2].connect(audioCtx.destination);
   // // mainAudio.play();
   // // changes end
-  audioContext.resume().then(() => {
-    wrapper.classList.add("paused");
-    playPauseBtn.querySelector("i").innerText = "pause";
-    mainAudio.play();
-  })
+  wrapper.classList.add("paused");
+  playPauseBtn.querySelector("i").innerText = "pause";
+  mainAudio.play();
 }
 
 //pause music function
@@ -264,6 +262,9 @@ function nextMusic() {
 
 // play or pause button event
 playPauseBtn.addEventListener("click", () => {
+  if (audioContext.state === 'suspended') {
+    audioContext.resume();
+  }
   const isMusicPlay = wrapper.classList.contains("paused");
   //if isPlayMusic is true then call pauseMusic else call playMusic
   isMusicPlay ? pauseMusic() : playMusic();
