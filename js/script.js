@@ -233,7 +233,7 @@ function playMusic() {
 
 //pause music function
 function pauseMusic() {
-  source.disconnect();
+  // source.disconnect();
   // mainAudio.pause();
   wrapper.classList.remove("paused");
   playPauseBtn.querySelector("i").innerText = "play_arrow";
