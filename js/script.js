@@ -19,6 +19,9 @@ musicImg.src = `images/${allMusic[1].src}.jpg`;
 musicArtist.innerText = "Unknwon";
 //checking eq
 let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+if (audioContext.state === 'suspended') {
+  audioContext.resume();
+}
 let sourceNode, bassNode, midNode, trebleNode;
 let audio = document.getElementById('main-audio');
 
