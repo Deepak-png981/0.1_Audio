@@ -191,7 +191,7 @@ fileUploader.addEventListener("change", function (e) {
     // });
     let result = e.target.result;
     mainAudio.src = result;
-    playMusic();
+    // playMusic();
   }
   reader.readAsDataURL(file);
   // reader.readAsArrayBuffer(file);
