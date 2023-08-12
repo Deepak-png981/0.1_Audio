@@ -270,3 +270,65 @@ label {
 .reset-reverb-btn:active {
     animation: clickAnimation 0.3s forwards;
 }
+
+/* Resetting some default button styles */
+@keyframes pulse {
+    0% {
+        transform: translateY(10px) scale(1);
+    }
+
+    50% {
+        transform: translateY(15px) scale(1.05);
+    }
+
+    100% {
+        transform: translateY(10px) scale(1);
+    }
+}
+
+#startAudio {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+
+    /* Styling the button */
+    background-color: #5C6BC0;
+    /* A calming shade of blue */
+    color: #ffffff;
+    /* White text */
+    padding: 15px 30px;
+    /* Some padding to make it look a bit larger and more clickable */
+    border-radius: 50px;
+    /* Large border radius for rounded corners */
+    font-size: 1em;
+    /* Text size */
+    font-weight: 600;
+    /* Making the text a bit bolder */
+    text-transform: uppercase;
+    /* Transforming the text to uppercase for a more button-like feel */
+    letter-spacing: 1px;
+    /* Adding some spacing between the letters */
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+    /* A subtle shadow for some depth */
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    /* Continuous pulse animation */
+    animation: pulse 1.5s infinite;
+}
+
+/* Adding a hover effect */
+/* Modifying hover to work alongside the animation */
+#startAudio:hover {
+    animation: pulse 1.5s infinite;
+    background-color: #3F51B5;
+}
+
+/* Removing translateY from active because of the continuous animation */
+#startAudio:active {
+    background-color: #303F9F;
+    box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.1);
+}
