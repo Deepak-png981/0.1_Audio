@@ -27,7 +27,9 @@ const convolver = audioContext.createConvolver();
 //check end
 // Setting up the equalizer
 const frequencies = [32, 64, 125, 250, 500];
-
+if (audioContext.state === 'suspended') {
+    audioContext.resume();
+}
 frequencies.forEach((freq, index) => {
     gainNode = audioContext.createGain();
     const biquadFilter = audioContext.createBiquadFilter();
