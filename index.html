@@ -2,96 +2,68 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DAW</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHWANI 0.1</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <div class="wrapper">
-    <div class="top-bar">
-      <i class="material-icons">expand_more</i>
-      <span>Now Playing</span>
-      <!-- <i class="material-icons">more_horiz</i> -->
-      <!-- testing of background changing colour -->
-      <div id="toggle">
-        <div id="circle" class="animate"></div>
-      </div>
-      <!-- testing end -->
-    </div>
-    <div class="img-area">
-      <img src="" alt="">
-    </div>
-    <div class="song-details">
-      <p class="name"></p>
-      <p class="artist"></p>
-    </div>
-    <div class="progress-area">
-      <div class="progress-bar">
-        <audio id="main-audio" src=""></audio>
-      </div>
-      <div class="song-timer">
-        <span class="current-time">0:00</span>
-        <span class="max-duration">0:00</span>
-      </div>
-    </div>
-    <div class="controls">
-      <!-- gana yaha upload kerne ke liye testing  --DEEPAK -->
-
-      <input type="file" id="fileUploader" style="display: none;" accept="audio/*" />
-      <label for="fileUploader" class="material-icons" id="upload">cloud_upload</label>
-      <!-- YAHA TESTING END -->
-
-      <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
-      <i id="prev" class="material-icons">skip_previous</i>
-      <div class="play-pause">
-        <i class="material-icons play">play_arrow</i>
-      </div>
-      <i id="next" class="material-icons">skip_next</i>
-      <!-- <i id="more-music" class="material-icons">queue_music</i> -->
-    </div>
-    <div class="music-list">
-      <div class="header">
-        <div class="row">
-          <i class="list material-icons">queue_music</i>
-          <span>Music list</span>
+    <div class="equalizer">
+        <h2>Equalizer</h2>
+        <div class="slider-container">
+            <input type="range" class="slider" min="-40" max="40" value="0" data-frequency="32">
+            <label>32Hz</label>
         </div>
-        <i id="close" class="material-icons">close</i>
-      </div>
-      <ul>
-        <!-- here li list are coming from js -->
-      </ul>
+        <div class="slider-container">
+            <input type="range" class="slider" min="-40" max="40" value="0" data-frequency="64">
+            <label>64Hz</label>
+        </div>
+        <div class="slider-container">
+            <input type="range" class="slider" min="-40" max="40" value="0" data-frequency="125">
+            <label>125Hz</label>
+        </div>
+        <div class="slider-container">
+            <input type="range" class="slider" min="-40" max="40" value="0" data-frequency="250">
+            <label>250Hz</label>
+        </div>
+        <div class="slider-container">
+            <input type="range" class="slider" min="-40" max="40" value="0" data-frequency="500">
+            <label>500Hz</label>
+        </div>
+        <button class="reset-btn">Reset Equalizer</button>
+
     </div>
-  </div>
+    <div class="music-player">
+        <header>
+            <h1>DHWANI</h1>
+        </header>
 
+        <div class="file-upload">
+            <input type="file" id="audioFile" accept="audio/*">
+            <label for="audioFile" class="file-label">Upload Audio</label>
+        </div>
 
-  <!-- testing for the equilizer card -->
-  <div class="card" id="equalizer">
-    <div class="card-body">
-      <h5 class="card-title">Equalizer</h5>
-      <div class="slidecontainer">
-        <label>
-          Bass:
-          <input type="range" min="-50" max="50" value="0" class="slider" id="bass">
-        </label>
-        <label>
-          Mid:
-          <input type="range" min="-50" max="50" value="0" class="slider" id="mid">
-        </label>
-        <label>
-          Treble:
-          <input type="range" min="-50" max="50" value="0" class="slider" id="treble">
-        </label>
-      </div>
+        <div class="waveform"></div>
+
+        <audio controls id="player"></audio>
     </div>
-  </div>
+    <!-- ... Previous HTML code ... -->
+    <div class="reverb-card">
+        <h2>Reverb Control</h2>
+        <div class="icon-container">
+            <div class="circle"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+        </div>
+        <div class="slider-container">
+            <input type="range" class="slider reverb-slider" min="-100" max="100" step="1" value="0">
+            <label>Reverb Intensity</label>
+            <!-- <button class="reset-reverb-btn">Reset Reverb</button> -->
+        </div>
+    </div>
 
-  <!-- testing for the equilizer end here -->
-  <script src="js/music-list.js"></script>
-  <script src="js/script.js"></script>
-
+    <script src="scripts.js"></script>
 </body>
 
 </html>

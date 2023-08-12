@@ -1,0 +1,272 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #20232a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.music-player {
+    border: 2px solid #61dafb;
+    padding: 20px;
+    width: 300px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 0px 10px 2px rgba(97, 218, 251, 0.5);
+    overflow: hidden;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.file-upload input[type="file"] {
+    display: none;
+}
+
+.file-label {
+    display: block;
+    padding: 10px 20px;
+    background-color: #61dafb;
+    color: #20232a;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    transform: translateY(0);
+}
+
+.file-label:hover {
+    background-color: #4fa9c5;
+}
+
+.file-label:active {
+    animation: clickAnimation 0.3s forwards;
+}
+
+@keyframes clickAnimation {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* ... previous CSS ... */
+
+audio {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #20232a;
+    border: none;
+    outline: none;
+    box-shadow: 2px 2px 5px #000;
+    opacity: 0.9;
+}
+
+/* Customized player controls */
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-rewind-button,
+audio::-webkit-media-controls-fast-forward-button {
+    background-color: #61dafb;
+    border-radius: 3px;
+    color: #20232a;
+}
+
+audio::-webkit-media-controls-volume-slider {
+    background-color: #61dafb;
+    color: #20232a;
+}
+
+audio::-webkit-media-controls-mute-button {
+    background-color: #61dafb;
+    border-radius: 3px;
+    color: #20232a;
+}
+
+audio::-webkit-media-controls-timeline {
+    background-color: #4fa9c5;
+    height: 5px;
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+    color: #61dafb;
+}
+
+/* ... Previous CSS ... */
+
+.equalizer {
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid #61dafb;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 0px 10px 2px rgba(97, 218, 251, 0.5);
+}
+
+h2 {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #61dafb;
+}
+
+.slider-container {
+    position: relative;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slider {
+    width: 100%;
+    margin: 5px 0;
+    appearance: none;
+    background: #4fa9c5;
+    height: 2px;
+    border-radius: 2px;
+    outline: none;
+    transition: box-shadow 0.3s;
+}
+
+.slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background-color: #61dafb;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+.slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background-color: #61dafb;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+.slider:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+}
+
+.slider:active::-moz-range-thumb {
+    transform: scale(1.2);
+}
+
+label {
+    font-size: 12px;
+    color: #61dafb;
+    margin-top: 5px;
+}
+
+/* ... Previous CSS ... */
+
+.reset-btn {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #61dafb;
+    color: #20232a;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+}
+
+.reset-btn:hover {
+    background-color: #4fa9c5;
+}
+
+.reset-btn:active {
+    background-color: #3f899b;
+}
+
+.reset-btn:active {
+    animation: clickAnimation 0.3s forwards;
+}
+
+/* ... Existing CSS ... */
+
+.reverb-card {
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid #61dafb;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 0px 10px 2px rgba(97, 218, 251, 0.5);
+    text-align: center;
+}
+
+.icon-container {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin: 20px auto;
+}
+
+.circle {
+    position: absolute;
+    border: 2px solid #61dafb;
+    border-radius: 50%;
+    animation: expandCircle 1.5s infinite;
+    opacity: 0;
+}
+
+.circle-2 {
+    animation-delay: 0.5s;
+}
+
+.circle-3 {
+    animation-delay: 1s;
+}
+
+@keyframes expandCircle {
+    0% {
+        transform: scale(0.5);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.reset-reverb-btn {
+    margin-top: 10px;
+    padding: 5px 15px;
+    background-color: #61dafb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    color: #20232a;
+}
+
+.reset-reverb-btn:hover {
+    background-color: #4fa9c5;
+}
+
+.reset-reverb-btn:active {
+    animation: clickAnimation 0.3s forwards;
+}
